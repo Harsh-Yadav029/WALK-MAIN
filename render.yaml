@@ -10,7 +10,7 @@ services:
     region: oregon
     buildCommand: npm run install:all
     startCommand: node main/backend/server.js
-    healthCheckPath: /api/settings
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production

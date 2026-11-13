@@ -6,9 +6,12 @@ services:
     region: oregon
     buildCommand: npm install --prefix backend --legacy-peer-deps
     startCommand: node backend/server.js
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000
       - key: CRM_PORT
         value: 10000
       - key: JWT_SECRET

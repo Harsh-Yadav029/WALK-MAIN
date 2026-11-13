@@ -40,6 +40,38 @@ const { router: crmRouter, initCrmDb } = require('./crm.routes');
 initCrmDb(db);
 app.use(crmRouter);
 
+// Healthcheck & Root status endpoint
+app.get(['/health', '/api/health'], (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+    service: 'Walk The Plan CRM API',
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'online',
+    service: 'Walk The Plan CRM API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      authMe: '/api/crm/auth/me',
+      login: '/api/crm/auth/login'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 404 handler for unknown API routes
+app.use('/api', (req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: `CRM route '${req.originalUrl}' does not exist on this server.`
+  });
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {

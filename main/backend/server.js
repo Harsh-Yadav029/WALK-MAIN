@@ -59,6 +59,35 @@ app.use('/uploads', express.static(uploadDir));
 const publicDir = path.join(__dirname, '../frontend/public');
 const distDir = path.join(__dirname, '../frontend/dist');
 
+// Root & Healthcheck endpoints (Prevents 404 when testing backend URL or running monitoring)
+app.get(['/health', '/api/health'], (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+    service: 'Walk The Plan Unified API',
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/', (req, res) => {
+  const indexHtml = path.join(distDir, 'index.html');
+  if (fs.existsSync(indexHtml)) {
+    return res.sendFile(indexHtml);
+  }
+  res.status(200).json({
+    status: 'online',
+    service: 'Walk The Plan Unified API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      settings: '/api/settings',
+      crmMe: '/api/crm/auth/me'
+    },
+    message: 'Backend server is active and running cleanly!',
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.get('/robots.txt', (req, res) => {
   const filePath = fs.existsSync(path.join(publicDir, 'robots.txt'))
     ? path.join(publicDir, 'robots.txt')
@@ -3571,6 +3600,30 @@ cron.schedule('30 4 * * *', () => {
 
 console.log('[Push Cron] Daily push notification reminder scheduled for 10:00 AM IST (04:30 UTC).');
 
+
+// Serve static frontend build if dist folder exists (supports all-in-one Render deployment)
+if (fs.existsSync(distDir)) {
+  app.use(express.static(distDir));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return res.status(404).json({ error: 'Endpoint not found', path: req.path });
+    }
+    const indexFile = path.join(distDir, 'index.html');
+    if (fs.existsSync(indexFile)) {
+      return res.sendFile(indexFile);
+    }
+    next();
+  });
+}
+
+// 404 handler for unknown API routes
+app.use('/api', (req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: `API route '${req.originalUrl}' does not exist on this server.`,
+    availableEndpoints: ['/api/health', '/api/settings', '/api/blogs', '/api/crm/auth/login']
+  });
+});
 
 // Global error handler for Multer & payload limits
 app.use((err, req, res, next) => {
