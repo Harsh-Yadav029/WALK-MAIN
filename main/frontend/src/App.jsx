@@ -175,7 +175,9 @@ const usePageTracker = () => {
 // Enterprise Handoff to Sales CRM Portal
 const CRMHandoff = () => {
   useEffect(() => {
-    const crmBase = import.meta.env.VITE_CRM_URL || 'http://localhost:5174';
+    const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const defaultCrmUrl = isLocal ? 'http://localhost:5174' : 'https://frontend-ilot.vercel.app';
+    const crmBase = import.meta.env.VITE_CRM_URL || defaultCrmUrl;
     window.location.replace(`${crmBase}/crm/login`);
   }, []);
 

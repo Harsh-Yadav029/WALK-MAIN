@@ -3800,7 +3800,7 @@ export default function CRMDashboard() {
 
             {/* Main Website Link */}
             <a
-              href={import.meta.env.VITE_MAIN_SITE_URL || 'http://localhost:5173'}
+              href={import.meta.env.VITE_MAIN_SITE_URL || (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5173' : 'https://frontend-main-phi-vert.vercel.app')}
               style={{
                 background: 'none', border: `1px solid ${P.border}`, borderRadius: 8,
                 padding: '6px 12px', color: P.gold, cursor: 'pointer', fontSize: 12,

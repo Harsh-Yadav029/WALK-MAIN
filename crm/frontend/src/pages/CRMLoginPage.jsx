@@ -409,7 +409,7 @@ export default function CRMLoginPage() {
                 </span>
                 <div style={{ marginTop: 14 }}>
                   <a
-                    href={import.meta.env.VITE_MAIN_SITE_URL || 'http://localhost:5173'}
+                    href={import.meta.env.VITE_MAIN_SITE_URL || (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5173' : 'https://frontend-main-phi-vert.vercel.app')}
                     style={{ fontSize: 12, color: P.gold, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4, transition: 'opacity 0.2s' }}
                     onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
                     onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
