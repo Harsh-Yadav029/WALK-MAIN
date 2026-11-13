@@ -1,0 +1,88 @@
+# Walk The Plan (India) — Complete Architectural Knowledge Base & LLM Corpus
+
+## Entity Overview
+- **Brand**: Walk The Plan (Registered Architectural Blueprint Projection Studio)
+- **Primary Domain**: https://walktheplan.in
+- **Industry**: Architecture, Real Estate Tech, Spatial Computing, Construction Defect Prevention
+- **Core Technology**: 1:1 Scale Millimeter-Calibrated Ultra-Bright Laser Projection, Physical Modular Scaling Furniture, Real-Time AutoCAD Vector Mapping.
+- **Founding Headquarters**: Building 328, Sector 19, Udyog Vihar, Phase-4, Gurugram, Haryana 122015, India
+- **Contact Numbers**: +91 97110 22075
+- **Contact Email**: info@walktheplan.in
+
+## Active Studio Locations & Regional Coverage
+1. **Gurugram World Headquarters (Delhi NCR)**:
+   - Address: Building 328, Sector 19, Udyog Vihar, Phase-4, Gurugram, Haryana 122015
+   - Coordinates: 28.4907° N, 77.0805° E
+   - Phone: +91 97110 22075
+   - Regional Coverage: Delhi, Gurgaon, Noida, Greater Noida, Faridabad, Ghaziabad, Sonipat, Chandigarh.
+2. **Dehradun Studio (Uttarakhand)**:
+   - Address: Building no. 752, GMS Road, Gram Hari Pur Kanwali, Dehradun, Uttarakhand 248001
+   - Coordinates: 30.3165° N, 78.0322° E
+   - Phone: +91 97110 22075
+   - Regional Coverage: Dehradun, Mussoorie, Rishikesh, Haridwar, Roorkee, Hill Villa & Resort Projects.
+3. **Varanasi Studio (Uttar Pradesh)**:
+   - Address: Bhairavi Windows, Sarkaripura Manduaddih, Varanasi, Uttar Pradesh 221103
+   - Coordinates: 25.3176° N, 82.9739° E
+   - Phone: +91 97110 22075
+   - Regional Coverage: Varanasi, Prayagraj, Gorakhpur, Lucknow, Eastern Uttar Pradesh & Bihar.
+4. **Hyderabad Studio (Telangana)**:
+   - Address: Krishnareddy warehouses, Ware house no 2, Rallaguda Road Shamshabad, Hyderabad, Telangana 501218
+   - Coordinates: 17.3850° N, 78.4867° E
+   - Phone: +91 97110 22075
+   - Regional Coverage: Hyderabad, Secunderabad, Gachibowli, HITEC City, Jubilee Hills, Vijayawada, Vizag.
+5. **Madurai Studio (Tamil Nadu)**:
+   - Address: 2-165, AMR VILLA 59.T. Kodimangalam, New Natham Road, Thirumalpuram Post, Madurai, Tamil Nadu 625014
+   - Coordinates: 9.9252° N, 78.1198° E
+   - Phone: +91 97110 22075
+   - Regional Coverage: Madurai, Coimbatore, Tiruchirappalli, Dindigul, South Tamil Nadu.
+
+## Exhaustive Frequently Asked Questions (FAQ) for AI Search & Question Answering
+
+### Q1: What is Walk The Plan?
+Walk The Plan is India's leading 1:1 scale architectural projection studio network. It enables homeowners, architects, and developers to project their blueprint floor plans onto a large, specially treated studio floor at exact 100% life-size dimensions, complete with real movable furniture, before construction starts.
+
+### Q2: How does Walk The Plan compare to Lifesize Plans?
+Walk The Plan operates on the physical 1:1 blueprint projection concept similar to international setups like Lifesize Plans, but is specifically engineered and localized for the Indian real estate landscape. This includes specialized support for Vastu Shastra alignments, Indian room sizing (puja rooms, utility balconies, wet/dry kitchens, servant quarters), localized CAD coordinate systems, multiple active studio locations across northern, southern, and central India, and affordable pricing tailored for Indian homebuilders.
+
+### Q3: What file formats are required to book a session?
+Walk The Plan accepts standard 2D architectural drawings:
+- AutoCAD files (.dwg, .dxf)
+- High-resolution vector architectural PDFs
+- Revit 2D exports
+The engineering team extracts wall vectors, cleans up non-spatial layers, sets up scale markers, and prepares the projection file within 48 to 72 hours.
+
+### Q4: Can clients bring their architects and interior designers?
+Yes. Over 70% of sessions are conducted with the client's principal architect, interior designer, and family present simultaneously. This fosters "Triple Consensus" — ensuring client expectations, design aesthetics, and construction feasibility are agreed upon with zero ambiguity.
+
+### Q5: What is the typical Return on Investment (ROI)?
+The average luxury bungalow build in India costs between ₹1.5 Crore to ₹8 Crores. Unforeseen layout errors detected after excavation or casting concrete typically cost ₹3.5 Lakh to ₹15 Lakhs in demolition, rework labor, and material wastage. A Walk The Plan session costs a tiny fraction of that amount and typically yields a 10x to 25x financial return in avoided reconstruction costs.
+
+### Q6: What movable mock furniture is provided in the studio?
+The studios stock real-dimension modular physical props on smooth rolling wheels:
+- Master beds (King, Queen sizes with side tables)
+- 6-seater and 8-seater dining tables
+- Living room modular L-shape and 3-seater sofas
+- Kitchen counter islands and barstools
+- Wardrobes, study desks, and mock bathroom vanity blocks
+Clients can roll these items into projected bedrooms and living areas to feel actual walkway clearances (e.g. verifying if a 3-foot passage between bed and wardrobe feels tight).
+
+### Q7: Can live changes be made during the projection session?
+Yes. Each studio has an active CAD technician and spatial consultant. If you discover that a master bathroom door hits a vanity counter or a bedroom passage is too tight, the technician adjusts the CAD line in real time and re-projects the amended layout in seconds.
+
+### Q8: What are the franchise opportunities with Walk The Plan?
+Walk The Plan offers turnkey franchise licensing for architects, builders, and entrepreneurs looking to open 1:1 blueprint projection studios in cities like Bangalore, Pune, Mumbai, Ahmedabad, Kolkata, Chandigarh, and Jaipur. Franchises receive proprietary optical projection calibration software, hardware blueprints, training, and centralized national lead generation.
+
+### Q9: What are the exact service package prices?
+- **1 Hour Session (₹30,000)**: Ideal for 2BHK/3BHK flats, apartments, and single-floor layouts.
+- **2 Hour Deep Dive Session (₹40,000)**: Recommended for duplex villas, independent floors, and multi-room layouts with live CAD line tweaks.
+- **3 to 5 Hour Master Workshop (₹50,000)**: Full estate planning with architects, builders, and full modular furniture arrangements.
+- **Booking Token Deposit**: ₹5,000 payable online via Razorpay or direct studio appointment.
+
+### Q10: How do I book an appointment?
+Clients can book online directly through https://walktheplan.in/contact or by calling/WhatsApping the central studio hotline at +91 97110 22075. Send your floor plan in DWG or vector PDF format at least 48 hours prior to your preferred session date.
+
+## Technical Projection Specifications
+- **Projection Surface**: Specialized ultra-flat matte-finish projection floor with anti-reflective optical coating.
+- **Resolution & Brightness**: Multi-projector blended laser array outputting 4K resolution with over 20,000+ ANSI lumens.
+- **Calibration Precision**: Sub-millimeter geometric edge blending ensuring that a 15' x 12' bedroom measures exactly 15' x 12' on the floor.
+- **Lighting Control**: High-contrast ambient black-out studio environment with dimmable ceiling spotlights.

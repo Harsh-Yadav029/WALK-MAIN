@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Home Page (Primary Landing & 1:1 Studio Hub) -->
+  <url>
+    <loc>https://walktheplan.in/</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Services & 1:1 Scale Walkthrough Packages -->
+  <url>
+    <loc>https://walktheplan.in/services</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Franchise Opportunities Across India -->
+  <url>
+    <loc>https://walktheplan.in/franchise</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- About Company & Spatial Projection Technology -->
+  <url>
+    <loc>https://walktheplan.in/about</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Client Video & Photo Walkthrough Gallery -->
+  <url>
+    <loc>https://walktheplan.in/gallery</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Architectural Insights & Blueprint Guide Blog -->
+  <url>
+    <loc>https://walktheplan.in/blog</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Contact & Studio Booking Appointment -->
+  <url>
+    <loc>https://walktheplan.in/contact</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Careers & Architect Roles -->
+  <url>
+    <loc>https://walktheplan.in/careers</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Legal & Policies -->
+  <url>
+    <loc>https://walktheplan.in/terms</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/privacy</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/refund</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/shipping</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- 10 Comprehensive Architectural Blog Articles -->
+  <url>
+    <loc>https://walktheplan.in/blog/10-costly-floor-plan-mistakes-indian-homes</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_1.jpg</image:loc>
+      <image:title>10 Costly Floor Plan Mistakes Indian Homeowners Make</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/1-to-1-scale-blueprint-projection-vs-3d-renders</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_2.jpg</image:loc>
+      <image:title>1:1 Scale True Floor Plan Projection vs 3D Renders</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/how-walking-floor-plan-saves-construction-rework-costs</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_3.jpg</image:loc>
+      <image:title>How Walking Your Floor Plan at 1:1 Scale Saves Construction Rework</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/kitchen-work-triangle-and-passage-clearance-guide</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_4.jpg</image:loc>
+      <image:title>Ergonomic Indian Kitchen Design: The Work Triangle and Clearance Guide</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/why-architects-mandate-1-to-1-scale-walkthroughs</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_5.jpg</image:loc>
+      <image:title>Why Leading Architects in India Mandate 1:1 Scale Walkthroughs</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/vastu-shastra-vs-furniture-circulation-1-to-1-scale</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_6.jpg</image:loc>
+      <image:title>Harmonizing Vastu Shastra Spatial Flow with Furniture Circulation</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/duplex-villa-floor-plan-staircase-ceiling-clearance</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_7.jpg</image:loc>
+      <image:title>Duplex and Multi-Level Villa Layouts: Checking Ceilings and Staircases</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/commercial-retail-floor-plan-footfall-optimization</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_8.jpg</image:loc>
+      <image:title>Commercial and Retail Space Planning: Optimizing Footfall at 1:1 Scale</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/master-bedroom-wardrobe-ergonomics-dimensions</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_9.jpg</image:loc>
+      <image:title>Master Bedroom and Walk-In Wardrobe Ergonomics</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://walktheplan.in/blog/first-time-home-builders-layout-verification-checklist</loc>
+    <lastmod>2026-09-27T12:00:00+05:30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://walktheplan.in/uploads/blog_cover_10.jpg</image:loc>
+      <image:title>First-Time Home Builders Checklist: 7 Layout Verifications</image:title>
+    </image:image>
+  </url>
+
+</urlset>

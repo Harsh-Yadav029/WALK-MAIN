@@ -1,0 +1,80 @@
+# robots.txt for Walk The Plan (https://walktheplan.in)
+# Designed for maximum Google indexing and AI Chatbot discovery (GEO / AEO)
+
+User-agent: *
+Allow: /
+Disallow: /fitscalez
+Disallow: /admin
+Disallow: /login
+Disallow: /api/admin/
+Disallow: /api/payment/
+
+# OpenAI ChatGPT & SearchGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Google Gemini & Google Search
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Bing & Copilot
+User-agent: Bingbot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI (Llama)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Common Crawl & Other AI Indexers
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+# AI Chatbot LLM Standards & Context Files
+# LLM Context: https://walktheplan.in/llms.txt
+# Comprehensive Knowledge Corpus: https://walktheplan.in/llms-full.txt
+
+# Sitemap Location
+Sitemap: https://walktheplan.in/sitemap.xml

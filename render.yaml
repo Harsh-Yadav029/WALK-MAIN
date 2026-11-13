@@ -1,0 +1,35 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Walk The Plan — Render Infrastructure Blueprint
+# Deploys unified Express Backend (Main Website APIs + B2B CRM Portal)
+# ═══════════════════════════════════════════════════════════════════════════════
+services:
+  - type: web
+    name: walktheplan-backend
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm run install:all
+    startCommand: node main/backend/server.js
+    healthCheckPath: /api/settings
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: info@walktheplan.in
+      - key: SMTP_HOST
+        value: smtp.hostinger.com
+      - key: SMTP_PORT
+        value: 465
+      - key: SMTP_USER
+        value: info@walktheplan.in
+      - key: SMTP_PASS
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
