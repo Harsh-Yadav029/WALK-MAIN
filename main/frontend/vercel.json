@@ -1,14 +1,30 @@
 {
   "framework": "vite",
-  "cleanUrls": true,
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/api/:path*",
-      "destination": "https://walktheplan-backend.onrender.com/api/:path*"
+      "source": "/crm",
+      "destination": "https://frontend-ilot.vercel.app/crm/login",
+      "permanent": false
     },
     {
-      "source": "/uploads/:path*",
-      "destination": "https://walktheplan-backend.onrender.com/uploads/:path*"
+      "source": "/crm/(.*)",
+      "destination": "https://frontend-ilot.vercel.app/crm/$1",
+      "permanent": false
+    },
+    {
+      "source": "/fitscalez/crm",
+      "destination": "https://frontend-ilot.vercel.app/crm/login",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://walktheplan-backend.onrender.com/api/$1"
+    },
+    {
+      "source": "/uploads/(.*)",
+      "destination": "https://walktheplan-backend.onrender.com/uploads/$1"
     },
     {
       "source": "/(.*)",
@@ -16,4 +32,3 @@
     }
   ]
 }
-
