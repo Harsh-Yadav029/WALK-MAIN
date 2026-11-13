@@ -222,7 +222,10 @@ const dbPath = process.env.DB_PATH || path.join(__dirname, 'database.db');
 let crmRouter = null;
 let initCrmDb = null;
 try {
-  const crmModule = require('../../crm/backend/crm.routes');
+  // First check colocated routes folder
+  const crmModule = fs.existsSync(path.join(__dirname, 'routes/crm.routes.js'))
+    ? require('./routes/crm.routes')
+    : require('../../crm/backend/crm.routes');
   crmRouter = crmModule.router;
   initCrmDb = crmModule.initCrmDb;
   if (crmRouter) {
@@ -3675,10 +3678,10 @@ app.use((err, req, res, next) => {
   next();
 });
 
-// Start Server
+// Start Server — bind explicitly to 0.0.0.0 for Render & Docker container routing
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Backend server running on http://0.0.0.0:${PORT}`);
   });
 }
 

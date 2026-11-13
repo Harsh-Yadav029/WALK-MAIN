@@ -164,9 +164,11 @@ let _db = null;
 router.use((req, res, next) => {
   if (!_db) {
     const sqlite3 = require('sqlite3').verbose();
-    const defaultDbPath = fs.existsSync(path.join(__dirname, '../../main/backend/database.db'))
-      ? path.join(__dirname, '../../main/backend/database.db')
-      : path.join(__dirname, 'database.db');
+    const defaultDbPath = fs.existsSync(path.join(__dirname, '../database.db'))
+      ? path.join(__dirname, '../database.db')
+      : (fs.existsSync(path.join(__dirname, '../../main/backend/database.db'))
+        ? path.join(__dirname, '../../main/backend/database.db')
+        : path.join(__dirname, 'database.db'));
     const dbPath = process.env.DB_PATH || defaultDbPath;
     _db = new sqlite3.Database(dbPath);
   }

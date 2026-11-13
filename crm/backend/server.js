@@ -100,8 +100,8 @@ app.use((err, req, res, next) => {
 });
 
 if (require.main === module) {
-  app.listen(CRM_PORT, () => {
-    console.log(`[CRM Server] Running on http://localhost:${CRM_PORT}`);
+  app.listen(CRM_PORT, '0.0.0.0', () => {
+    console.log(`[CRM Server] Running on http://0.0.0.0:${CRM_PORT}`);
   });
 }
 
