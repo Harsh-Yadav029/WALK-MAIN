@@ -67,6 +67,18 @@ function initCrmDb(db) {
               ['Admin', 'admin@walktheplan.in', 'admin', hash, 'Management']
             );
             console.log('[CRM] Seeded default administrator (admin@walktheplan.in / walk@321).');
+          } else {
+            // Ensure admin@walktheplan.in specifically exists
+            db.get('SELECT id FROM crm_users WHERE email = ?', ['admin@walktheplan.in'], (adminErr, adminRow) => {
+              if (!adminErr && !adminRow) {
+                const hash = bcrypt.hashSync('walk@321', 10);
+                db.run(
+                  'INSERT INTO crm_users (name, email, role, password_hash, is_active, department) VALUES (?, ?, ?, ?, 1, ?)',
+                  ['Admin', 'admin@walktheplan.in', 'admin', hash, 'Management']
+                );
+                console.log('[CRM] Seeded administrator (admin@walktheplan.in / walk@321).');
+              }
+            });
           }
         });
       }

@@ -201,19 +201,35 @@ app.get(['/favicon.ico', '/favicon.png', '/favicon.svg', '/favicon-48x48.png', '
 
 // Database connection
 const dbPath = process.env.DB_PATH || path.join(__dirname, 'database.db');
+
+// Load CRM routes synchronously so they are in Express route table before any requests arrive
+let crmRouter = null;
+let initCrmDb = null;
+try {
+  const crmModule = require('../../crm/backend/crm.routes');
+  crmRouter = crmModule.router;
+  initCrmDb = crmModule.initCrmDb;
+  if (crmRouter) {
+    app.use(crmRouter);
+    console.log('[Main Server] Synchronously mounted CRM routes at /api/crm');
+  }
+} catch (crmErr) {
+  console.warn('[Main Server] CRM routes module not loaded:', crmErr.message);
+}
+
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err);
   } else {
     console.log('Connected to SQLite database at:', dbPath);
     initDb();
-    try {
-      const { router: crmRouter, initCrmDb } = require('../../crm/backend/crm.routes');
-      initCrmDb(db);
-      app.use(crmRouter);
-      console.log('[Main Server] Mounted CRM routes fallback successfully.');
-    } catch (crmErr) {
-      console.warn('[Main Server] CRM routes fallback not loaded:', crmErr.message);
+    if (typeof initCrmDb === 'function') {
+      try {
+        initCrmDb(db);
+        console.log('[Main Server] CRM database tables & seeds initialized successfully.');
+      } catch (crmDbErr) {
+        console.error('[Main Server] CRM database init error:', crmDbErr.message);
+      }
     }
   }
 });
@@ -3644,8 +3660,10 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Backend server running on http://localhost:${PORT}`);
+  });
+}
 
 module.exports = { app, db, identifyBot, detectPlatform };
