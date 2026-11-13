@@ -15,9 +15,8 @@ const JWT_SECRET = process.env.JWT_SECRET || 'walk_the_plan_crm_secret_key_2026'
 
 // ─── DB Schema Init ───────────────────────────────────────────────────────────
 function initCrmDb(db) {
-  db.serialize(() => {
-    // CRM Leads table
-    db.run(`CREATE TABLE IF NOT EXISTS crm_leads (
+  // CRM Leads table
+  db.run(`CREATE TABLE IF NOT EXISTS crm_leads (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       email TEXT,
@@ -118,7 +117,6 @@ function initCrmDb(db) {
       if (err) console.error('[CRM] Error creating crm_call_logs table:', err.message);
       else console.log('[CRM] crm_call_logs table ready.');
     });
-  });
 }
 
 // ─── Hardened Auth Middleware ─────────────────────────────────────────────────

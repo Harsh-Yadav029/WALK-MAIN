@@ -483,16 +483,14 @@ function seedBlogsAndImages(db, uploadDir) {
   db.get("SELECT COUNT(*) as count FROM blogs", (err, row) => {
     if (!err && (!row || row.count < 10)) {
       console.log(`Seeding 10 comprehensive Walk The Plan blogs (Current count: ${row ? row.count : 0})...`);
-      db.serialize(() => {
-        db.run("DELETE FROM blogs", () => {
-          const stmt = db.prepare(`INSERT INTO blogs (title, slug, excerpt, content, cover_image, category, author) VALUES (?, ?, ?, ?, ?, ?, ?)`);
-          blogsData.forEach(b => {
-            stmt.run([b.title, b.slug, b.excerpt, b.content, b.cover_image, b.category, b.author]);
-          });
-          stmt.finalize(() => {
-            console.log('Successfully seeded 10 Walk The Plan architectural blogs into database.');
-          });
+      db.run("DELETE FROM blogs", () => {
+        blogsData.forEach(b => {
+          db.run(
+            `INSERT INTO blogs (title, slug, excerpt, content, cover_image, category, author) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [b.title, b.slug, b.excerpt, b.content, b.cover_image, b.category, b.author]
+          );
         });
+        console.log('Successfully seeded 10 Walk The Plan architectural blogs into database.');
       });
     }
   });

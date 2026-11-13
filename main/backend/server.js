@@ -272,6 +272,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
     console.error('Error opening database:', err);
   } else {
     console.log('Connected to SQLite database at:', dbPath);
+    // Enable WAL mode & 10s busy timeout to eliminate lock contention & deadlocks
+    db.run('PRAGMA journal_mode = WAL');
+    db.run('PRAGMA busy_timeout = 10000');
     initDb();
     if (typeof initCrmDb === 'function') {
       try {
