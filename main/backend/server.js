@@ -26,6 +26,14 @@ const ensureUtcIso = (str) => {
   return s;
 };
 
+// Prevent unhandled errors from abruptly terminating the container (avoids 502 Bad Gateway)
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught Exception caught safely:', err.message, err.stack);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[FATAL] Unhandled Promise Rejection caught safely:', reason);
+});
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'walk_the_plan_super_secret_key_12345';
@@ -101,6 +109,29 @@ app.get('/', (req, res) => {
     },
     message: 'Backend server is active and running cleanly!',
     timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/api/debug-db', (req, res) => {
+  if (!db) {
+    return res.status(500).json({ status: 'error', message: 'db object is null' });
+  }
+  db.get('SELECT 1 as val', (err, row) => {
+    if (err) {
+      return res.status(500).json({ status: 'error', query: 'SELECT 1', error: err.message });
+    }
+    db.get('SELECT count(*) as count FROM users', (uErr, uRow) => {
+      db.get('SELECT count(*) as count FROM crm_users', (cErr, cRow) => {
+        res.status(200).json({
+          status: 'ok',
+          dbPath,
+          select1: row,
+          users: uRow ? uRow.count : uErr?.message,
+          crmUsers: cRow ? cRow.count : cErr?.message,
+          uptime: Math.floor(process.uptime())
+        });
+      });
+    });
   });
 });
 
