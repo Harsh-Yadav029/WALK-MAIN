@@ -26,12 +26,29 @@ export default function CRMLoginPage() {
     setError('');
     setLoading(true);
     try {
-      const backendBase = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
-      const res = await fetch(`${backendBase}/api/crm/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+      const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+      const configuredBase = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
+      const backendBase = isLocal ? (configuredBase || 'http://localhost:5000') : '';
+
+      let res;
+      try {
+        res = await fetch(`${backendBase}/api/crm/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        });
+      } catch (fetchErr) {
+        if (backendBase) {
+          // If direct URL is blocked by CORS/network, fallback through Vercel reverse proxy
+          res = await fetch('/api/crm/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+          });
+        } else {
+          throw fetchErr;
+        }
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
       localStorage.setItem('crm_token', data.token);
