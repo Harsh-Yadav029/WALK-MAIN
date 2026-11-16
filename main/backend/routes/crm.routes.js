@@ -584,23 +584,123 @@ router.put('/api/crm/leads/:id', crmAuth, async (req, res) => {
 
 // GET /api/crm/leads/meta-webhook — Meta Webhook Challenge verification
 router.get('/api/crm/leads/meta-webhook', (req, res) => {
-  if (req.query['hub.mode'] === 'subscribe' && req.query['hub.challenge']) {
-    return res.send(req.query['hub.challenge']);
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+  const configuredToken = process.env.META_VERIFY_TOKEN || 'walktheplan_meta_2026';
+
+  if (mode === 'subscribe') {
+    if (!token || token === configuredToken) {
+      console.log('[Meta Webhook] Challenge verified successfully with Meta.');
+      return res.status(200).send(challenge);
+    }
+    console.warn('[Meta Webhook] Verify token mismatch:', token);
+    return res.status(403).send('Verification token mismatch');
   }
-  res.json({ status: 'active', message: 'Meta Ads Webhook Endpoint Live & Ready' });
+  res.json({
+    status: 'active',
+    service: 'Walk The Plan Meta Ads Webhook',
+    verify_token_configured: Boolean(process.env.META_VERIFY_TOKEN),
+    instructions: 'Set Callback URL in Meta Developers to this endpoint and verify token to walktheplan_meta_2026'
+  });
 });
 
-// POST /api/crm/leads/meta-webhook — Ingest live leads from Meta Ads Manager / Google Sheets
+// Helper to fetch full lead details from Meta Graph API if leadgen_id is provided
+async function fetchMetaLeadgenDetails(leadgenId, pageAccessToken) {
+  try {
+    const url = `https://graph.facebook.com/v19.0/${leadgenId}?access_token=${encodeURIComponent(pageAccessToken)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error(`[Meta Graph API] Failed to fetch lead ${leadgenId}:`, errText);
+      return null;
+    }
+    const data = await response.json();
+    const lead = {
+      name: null,
+      email: null,
+      phone: null,
+      city: null,
+      floor_plan_status: null,
+      plot_size: null,
+      ad_name: data.ad_name || 'Meta Ad Lead',
+      campaign_name: data.campaign_name || 'Meta Campaign',
+      platform: data.platform || 'ig'
+    };
+
+    if (Array.isArray(data.field_data)) {
+      data.field_data.forEach(field => {
+        const val = Array.isArray(field.values) ? field.values[0] : field.values;
+        const name = (field.name || '').toLowerCase();
+        if (name.includes('name') || name === 'full_name' || name === 'client_name') lead.name = val;
+        else if (name.includes('email')) lead.email = val;
+        else if (name.includes('phone') || name === 'phone_number') lead.phone = val;
+        else if (name.includes('city') || name.includes('location')) lead.city = val;
+        else if (name.includes('floor') || name.includes('plan')) lead.floor_plan_status = val;
+        else if (name.includes('plot') || name.includes('size')) lead.plot_size = val;
+      });
+    }
+    return lead;
+  } catch (err) {
+    console.error('[Meta Graph API] Exception fetching lead details:', err.message);
+    return null;
+  }
+}
+
+// POST /api/crm/leads/meta-webhook — Ingest live leads from Meta Ads Manager / Zapier / Make / Pabbly
 router.post('/api/crm/leads/meta-webhook', async (req, res) => {
   const db = req.crmDb;
   try {
-    // Meta Webhook Challenge verification
+    // Check if it's a verification request sent via POST
     if (req.query['hub.mode'] === 'subscribe' && req.query['hub.challenge']) {
-      return res.send(req.query['hub.challenge']);
+      return res.status(200).send(req.query['hub.challenge']);
     }
 
     const payload = req.body || {};
-    const name = payload.full_name || payload.name || payload.client_name || 'New Meta Lead';
+    const metaAccessToken = process.env.META_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN;
+
+    // Check if payload is native Meta Webhook event format: entry[].changes[].value.leadgen_id
+    if (payload.object === 'page' && Array.isArray(payload.entry)) {
+      for (const entry of payload.entry) {
+        if (Array.isArray(entry.changes)) {
+          for (const change of entry.changes) {
+            if (change.field === 'leadgen' && change.value) {
+              const leadgenId = change.value.leadgen_id;
+              const adId = change.value.ad_id;
+              const formId = change.value.form_id;
+
+              let leadInfo = null;
+              if (leadgenId && metaAccessToken) {
+                leadInfo = await fetchMetaLeadgenDetails(leadgenId, metaAccessToken);
+              }
+
+              const name = leadInfo?.name || `Meta Lead (${leadgenId || formId || 'New'})`;
+              const email = leadInfo?.email || null;
+              const phone = leadInfo?.phone || null;
+              const city = leadInfo?.city || null;
+              const platform = leadInfo?.platform || 'ig';
+              const floor_plan_status = leadInfo?.floor_plan_status || null;
+              const plot_size = leadInfo?.plot_size || null;
+              const ad_name = leadInfo?.ad_name || (adId ? `Ad #${adId}` : 'Meta Lead Ads');
+              const campaign_name = leadInfo?.campaign_name || 'Walk The Plan 1:1';
+
+              await dbRun(
+                db,
+                `INSERT INTO crm_leads 
+                  (name, email, phone, city, source, status, lead_category, meta_platform, floor_plan_status, plot_size, meta_ad_name, meta_campaign_name)
+                 VALUES (?, ?, ?, ?, ?, ?, 'meta', ?, ?, ?, ?, ?)`,
+                [name, email, phone, city, `Meta Ads (${platform.toUpperCase()})`, 'Hot Lead', platform, floor_plan_status, plot_size, ad_name, campaign_name]
+              );
+              console.log(`[Meta Webhook] Successfully ingested native leadgen #${leadgenId}`);
+            }
+          }
+        }
+      }
+      return res.status(200).json({ success: true, message: 'Meta lead event processed.' });
+    }
+
+    // Direct flat JSON payload (from Zapier, Make, Pabbly, or direct cURL test)
+    const name = payload.full_name || payload.name || payload.client_name || 'New Meta Customer';
     const email = payload.email || payload.email_address || null;
     const phone = payload.phone_number || payload.phone || null;
     const city = payload.city || payload.location || null;
@@ -619,7 +719,11 @@ router.post('/api/crm/leads/meta-webhook', async (req, res) => {
       [name, email, phone, city, `Meta Ads (${platform.toUpperCase()})`, status, platform, floor_plan_status, plot_size, ad_name, campaign_name]
     );
 
-    res.status(201).json({ success: true, id: result.lastID, message: 'Meta Lead ingested successfully.' });
+    res.status(201).json({
+      success: true,
+      id: result.lastID,
+      message: 'Meta Customer lead ingested into CRM successfully.'
+    });
   } catch (err) {
     console.error('[CRM Webhook] Error:', err.message);
     res.status(500).json({ error: err.message });
