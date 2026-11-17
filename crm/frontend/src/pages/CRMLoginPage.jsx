@@ -26,9 +26,7 @@ export default function CRMLoginPage() {
     setError('');
     setLoading(true);
     try {
-      const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-      const configuredBase = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
-      const backendBase = isLocal ? (configuredBase || 'http://localhost:5000') : '';
+      const backendBase = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
 
       let res;
       try {

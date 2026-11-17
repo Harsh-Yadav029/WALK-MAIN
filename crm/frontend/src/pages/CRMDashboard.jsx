@@ -12,8 +12,7 @@ import {
 } from 'lucide-react';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-const BACKEND_BASE = isLocal ? ((import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000').replace(/\/$/, '')) : '';
+const BACKEND_BASE = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
 const API = `${BACKEND_BASE}/api/crm`;
 const LEADS_PER_PAGE = 25;
 
