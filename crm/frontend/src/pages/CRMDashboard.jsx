@@ -925,43 +925,47 @@ const TabLeads = ({ addToast, onAudio, onCallLead, isAgent, isAdmin, isManager, 
             </button>
           </div>
 
-          <button
-            onClick={() => setShowWebhookModal(true)}
-            style={{
-              background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.35)',
-              borderRadius: 8, padding: '7px 14px', color: '#c084fc', fontSize: 12, fontWeight: 700,
-              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6
-            }}
-          >
-            <Sparkles size={13} /> Meta Ads Manager & Google Sheets Live Sync
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => setShowWebhookModal(true)}
+              style={{
+                background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.35)',
+                borderRadius: 8, padding: '7px 14px', color: '#c084fc', fontSize: 12, fontWeight: 700,
+                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6
+              }}
+            >
+              <Sparkles size={13} /> Meta Ads Manager & Google Sheets Live Sync
+            </button>
+          )}
         </div>
       ) : (
-        <div style={{
-          background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.3)',
-          borderRadius: 12, padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          flexWrap: 'wrap', gap: 10
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Target size={20} color="#c084fc" />
-            <div>
-              <strong style={{ color: '#c084fc', fontSize: 13 }}>Marketing Department — View-Only Meta Leads Portal</strong>
-              <div style={{ fontSize: 12, color: P.muted }}>
-                Authorized to inspect live Meta Ads (Facebook & Instagram) inquiries, floor plan readiness, and campaign attribution.
+        isAdmin && (
+          <div style={{
+            background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.3)',
+            borderRadius: 12, padding: '12px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            flexWrap: 'wrap', gap: 10
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <Target size={20} color="#c084fc" />
+              <div>
+                <strong style={{ color: '#c084fc', fontSize: 13 }}>Marketing Department — View-Only Meta Leads Portal</strong>
+                <div style={{ fontSize: 12, color: P.muted }}>
+                  Authorized to inspect live Meta Ads (Facebook & Instagram) inquiries, floor plan readiness, and campaign attribution.
+                </div>
               </div>
             </div>
+            <button
+              onClick={() => setShowWebhookModal(true)}
+              style={{
+                background: '#c084fc20', border: '1px solid #c084fc40', borderRadius: 8,
+                padding: '6px 14px', color: '#c084fc', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 6
+              }}
+            >
+              <Link size={13} /> Webhook & Live Google Sheets Setup
+            </button>
           </div>
-          <button
-            onClick={() => setShowWebhookModal(true)}
-            style={{
-              background: '#c084fc20', border: '1px solid #c084fc40', borderRadius: 8,
-              padding: '6px 14px', color: '#c084fc', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 6
-            }}
-          >
-            <Link size={13} /> Webhook & Live Google Sheets Setup
-          </button>
-        </div>
+        )
       )}
 
       {/* ── Toolbar & Multi-Filters ── */}
@@ -3656,7 +3660,7 @@ export default function CRMDashboard() {
     ],
     marketing: [
       { id: 'leads', label: 'Meta Leads (View-Only)', icon: Eye },
-      { id: 'integration', label: 'Meta Ads & Sheets Sync', icon: Zap },
+      ...(isAdmin ? [{ id: 'integration', label: 'Meta Ads & Sheets Sync', icon: Zap }] : []),
     ],
     operations: [
       { id: 'infrastructure', label: 'Studio Infrastructure', icon: Activity },
@@ -3975,35 +3979,37 @@ export default function CRMDashboard() {
               <TabMarketingIntegration addToast={addToast} />
             ) : (
               <>
-                <div style={{
-                  background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.3)',
-                  borderRadius: 14, padding: '16px 22px', marginBottom: 24,
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(168,85,247,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Eye size={20} color="#a855f7" />
+                {isAdmin && (
+                  <div style={{
+                    background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.3)',
+                    borderRadius: 14, padding: '16px 22px', marginBottom: 24,
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(168,85,247,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Eye size={20} color="#a855f7" />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: P.text }}>
+                          Marketing RBAC Policy Active
+                        </div>
+                        <div style={{ fontSize: 12, color: P.muted, marginTop: 2 }}>
+                          Per RBAC access policy: Marketing personnel are restricted strictly to view-only access for Meta Leads. Lead editing, deletions, and website lead operations are disabled.
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: P.text }}>
-                        Marketing RBAC Policy Active
-                      </div>
-                      <div style={{ fontSize: 12, color: P.muted, marginTop: 2 }}>
-                        Per RBAC access policy: Marketing personnel are restricted strictly to view-only access for Meta Leads. Lead editing, deletions, and website lead operations are disabled.
-                      </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(168,85,247,0.15)', padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, color: '#c084fc' }}>
+                      <Shield size={12} /> RBAC ENFORCED
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(168,85,247,0.15)', padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, color: '#c084fc' }}>
-                    <Shield size={12} /> RBAC ENFORCED
-                  </div>
-                </div>
+                )}
 
                 <TabLeads
                   addToast={addToast}
                   onAudio={onAudio}
                   onCallLead={onCallLead}
                   isAgent={false}
-                  isAdmin={false}
+                  isAdmin={isAdmin}
                   isManager={false}
                   isMarketingView={true}
                   initialCategory="meta"
