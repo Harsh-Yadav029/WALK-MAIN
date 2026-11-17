@@ -1024,7 +1024,7 @@ const TabLeads = ({ addToast, onAudio, onCallLead, isAgent, isAdmin, isManager, 
             </button>
           )}
 
-          {canEdit && (
+          {canEdit && (isAdmin || isManager) && (
             <>
               <label style={{ ...tbBtn, position: 'relative' }} title="Upload Excel or CSV file">
                 <Upload size={14} />
@@ -3601,7 +3601,7 @@ export default function CRMDashboard() {
 
   const isAdmin = currentUser.role === 'admin';
   const isManager = currentUser.role === 'manager' || isAdmin;
-  const isAgent = currentUser.role === 'agent' || currentUser.role === 'field_agent';
+  const isAgent = ['agent', 'sales', 'sales_engineer', 'field_agent'].includes(currentUser.role) && !isManager;
 
   // Determine active department (Admin defaults to 'sales' and can switch between all depts)
   const [activeDept, setActiveDept] = useState(() => {
@@ -3654,7 +3654,7 @@ export default function CRMDashboard() {
       { id: 'overview', label: 'Dashboard', icon: BarChart3 },
       { id: 'leads', label: 'Leads (Meta & Web)', icon: Users },
       { id: 'calls', label: 'Call Studio', icon: PhoneCall },
-      { id: 'upload', label: 'Data Ingest', icon: Upload },
+      ...(isAdmin || isManager ? [{ id: 'upload', label: 'Data Ingest', icon: Upload }] : []),
       { id: 'audio', label: 'Site Audio', icon: Mic },
     ],
     marketing: [

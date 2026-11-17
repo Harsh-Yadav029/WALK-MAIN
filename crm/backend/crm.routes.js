@@ -137,6 +137,9 @@ function crmAuth(req, res, next) {
 }
 
 // ─── Role-Based Access Control Middleware ─────────────────────────────────────
+const isSalesAgent = (role) => ['agent', 'sales', 'sales_engineer', 'field_agent'].includes(role);
+const isElevated = (role) => ['admin', 'manager'].includes(role);
+
 function requireRole(...roles) {
   return (req, res, next) => {
     if (!req.user) return res.status(401).json({ message: 'Unauthorized.' });
@@ -473,10 +476,10 @@ router.get('/api/crm/leads', crmAuth, async (req, res) => {
       params.push(end_date);
     }
 
-    // Agents can only see their own assigned leads
-    if (req.user.role === 'agent' && req.user.name) {
-      conditions.push('(assigned_to = ? OR assigned_to IS NULL)');
-      params.push(req.user.name);
+    // RBAC: Sales Executives can ONLY see leads specifically assigned to their name, email, or user ID
+    if (isSalesAgent(req.user.role) && !isElevated(req.user.role)) {
+      conditions.push('(assigned_to = ? OR assigned_to = ? OR assigned_to = ?)');
+      params.push(req.user.name, req.user.email, String(req.user.id));
     }
 
     if (status) { conditions.push('status = ?'); params.push(status); }
@@ -896,9 +899,9 @@ router.post('/api/crm/leads/bulk-delete', crmAuth, requireRole('admin', 'manager
 const handleLeadUpload = async (req, res) => {
   const db = req.crmDb;
 
-  // Agents cannot bulk upload
-  if (req.user && req.user.role === 'agent') {
-    return res.status(403).json({ message: 'Agents are not permitted to bulk upload leads.' });
+  // RBAC: Sales Executives cannot bulk upload
+  if (req.user && isSalesAgent(req.user.role) && !isElevated(req.user.role)) {
+    return res.status(403).json({ message: 'Sales executives are not permitted to bulk upload leads.' });
   }
 
   let leadsToInsert = [];
@@ -1208,8 +1211,8 @@ router.get('/api/crm/calls', crmAuth, async (req, res) => {
     const conditions = [];
     const params = [];
 
-    // Agents only see their own calls
-    if (req.user.role === 'agent') {
+    // RBAC: Sales Executives only see their own calls
+    if (isSalesAgent(req.user.role) && !isElevated(req.user.role)) {
       conditions.push('c.caller_id = ?');
       params.push(req.user.id);
     }
@@ -1492,6 +1495,12 @@ router.get('/api/crm/stats', crmAuth, async (req, res) => {
 
     const conditions = [];
     const params = [];
+
+    // RBAC: Sales Executives only see stats for their own assigned leads
+    if (isSalesAgent(req.user.role) && !isElevated(req.user.role)) {
+      conditions.push('(assigned_to = ? OR assigned_to = ? OR assigned_to = ?)');
+      params.push(req.user.name, req.user.email, String(req.user.id));
+    }
 
     if (lead_category) {
       conditions.push('lead_category = ?');
