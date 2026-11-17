@@ -713,6 +713,43 @@ router.post('/api/crm/leads/meta-webhook', async (req, res) => {
 
     const createdAt = payload.created_at || payload.created_time || new Date().toISOString();
 
+    // DEDUPLICATION: Prevent duplicate lead entry if identical lead was ingested recently (last 10 minutes)
+    const matchConditions = [];
+    const matchParams = [];
+    if (phone) {
+      matchConditions.push('phone = ?');
+      matchParams.push(phone);
+    }
+    if (email) {
+      matchConditions.push('email = ?');
+      matchParams.push(email);
+    }
+    if (name && name !== 'Meta Customer' && name !== 'New Meta Customer' && !phone && !email) {
+      matchConditions.push('name = ?');
+      matchParams.push(name);
+    }
+
+    if (matchConditions.length > 0) {
+      const existing = await dbGet(
+        db,
+        `SELECT id, name, created_at FROM crm_leads 
+         WHERE (${matchConditions.join(' OR ')})
+         AND created_at >= datetime('now', '-10 minutes')
+         LIMIT 1`,
+        matchParams
+      );
+
+      if (existing) {
+        console.log(`[CRM Webhook] Duplicate lead prevented: "${name}" (already ingested as #${existing.id})`);
+        return res.status(200).json({
+          success: true,
+          id: existing.id,
+          duplicate: true,
+          message: 'Lead already ingested. Duplicate ignored.'
+        });
+      }
+    }
+
     const result = await dbRun(
       db,
       `INSERT INTO crm_leads 
