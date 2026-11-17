@@ -68,7 +68,7 @@ const FIELD_ALIASES = {
     'value', 'amount', 'price', 'cost', 'investment', 'budgetscope', 'approxbudget'
   ],
   source: [
-    'source', 'leadsource', 'campaign', 'campaignname', 'platform', 'channel',
+    'source', 'leadsource', 'channel',
     'origin', 'medium', 'adsource', 'utmsource', 'referral'
   ],
   notes: [
@@ -100,10 +100,13 @@ const FIELD_ALIASES = {
     'whatisyourplotsize', 'whatisyourplotsize?', 'plotsize', 'plotsizerange', 'plotsqyards'
   ],
   meta_ad_name: [
-    'adname', 'adid', 'adsetname', 'adsetid'
+    'adname', 'adid', 'adsetname', 'adsetid', 'metaadname'
   ],
   meta_campaign_name: [
-    'campaignname', 'campaignid'
+    'campaignname', 'campaignid', 'metacampaignname', 'campaign'
+  ],
+  meta_form_name: [
+    'formname', 'formid', 'form'
   ],
   studio_location: [
     'studiolocation', 'studio', 'studioname'
@@ -145,7 +148,10 @@ function matchFieldHeader(rawHeader) {
     return 'email';
   }
   // Names / Client
-  if (norm.includes('client') || norm.includes('customer') || norm.includes('company') || norm.includes('fullname') || norm.endsWith('name')) {
+  const NON_PERSON_NAMES = ['adname', 'adsetname', 'campaignname', 'formname', 'studioname', 'filename', 'pagename', 'accountname', 'servicename', 'packagename', 'storename'];
+  if (NON_PERSON_NAMES.includes(norm)) {
+    // Already handled by specific aliases
+  } else if (norm.includes('client') || norm.includes('customer') || norm.includes('prospect') || norm.includes('fullname') || norm === 'name' || norm.startsWith('contact') || norm.endsWith('person')) {
     return 'name';
   }
   // Location
@@ -648,11 +654,11 @@ function sanitizeLeadObject(raw) {
     }
   }
 
-  let name = normalizedKeys.name || raw.name || raw.full_name || raw.client;
-  let first = normalizedKeys.firstName || raw.first_name;
-  let last = normalizedKeys.lastName || raw.last_name;
-  let phone = normalizedKeys.phone || raw.phone || raw.mobile || raw.contact;
-  let email = normalizedKeys.email || raw.email;
+  let name = raw.full_name || raw.fullname || raw.client_name || raw.customer_name || raw.lead_name || normalizedKeys.name || raw.name || raw.client;
+  let first = raw.first_name || normalizedKeys.firstName;
+  let last = raw.last_name || normalizedKeys.lastName;
+  let phone = raw.phone_number || raw.phone || raw.mobile || normalizedKeys.phone || raw.contact;
+  let email = raw.email || raw.email_address || normalizedKeys.email;
   let requirement = normalizedKeys.requirement || raw.requirement || raw.requirements || raw.service;
   let city = normalizedKeys.city || raw.city || raw.location;
   let state = normalizedKeys.state || raw.state;

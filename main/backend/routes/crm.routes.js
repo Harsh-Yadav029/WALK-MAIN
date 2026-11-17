@@ -711,12 +711,14 @@ router.post('/api/crm/leads/meta-webhook', async (req, res) => {
     const campaign_name = payload.campaign_name || payload.campaign_id || 'Walk The Plan 1:1';
     const status = payload.status || 'Hot Lead';
 
+    const createdAt = payload.created_at || payload.created_time || new Date().toISOString();
+
     const result = await dbRun(
       db,
       `INSERT INTO crm_leads 
-        (name, email, phone, city, source, status, lead_category, meta_platform, floor_plan_status, plot_size, meta_ad_name, meta_campaign_name)
-       VALUES (?, ?, ?, ?, ?, ?, 'meta', ?, ?, ?, ?, ?)`,
-      [name, email, phone, city, `Meta Ads (${platform.toUpperCase()})`, status, platform, floor_plan_status, plot_size, ad_name, campaign_name]
+        (name, email, phone, city, source, status, lead_category, meta_platform, floor_plan_status, plot_size, meta_ad_name, meta_campaign_name, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'meta', ?, ?, ?, ?, ?, ?)`,
+      [name, email, phone, city, `Meta Ads (${platform.toUpperCase()})`, status, platform, floor_plan_status, plot_size, ad_name, campaign_name, createdAt]
     );
 
     res.status(201).json({

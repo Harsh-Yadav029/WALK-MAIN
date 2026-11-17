@@ -128,7 +128,29 @@ const apiFetch = async (path, options = {}) => {
   return res.json();
 };
 
-const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+const fmtDate = (d) => {
+  if (!d) return '—';
+  let dt;
+  if (typeof d === 'number') {
+    dt = new Date(d > 1e11 ? d : d * 1000);
+  } else {
+    let str = String(d).trim();
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(str)) {
+      str = str.replace(' ', 'T') + 'Z';
+    }
+    dt = new Date(str);
+  }
+  if (isNaN(dt.getTime())) return '—';
+  return dt.toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+};
 const fmtNum = (n) => (n ?? 0).toLocaleString('en-IN');
 const fmtDuration = (sec) => {
   const m = Math.floor(sec / 60);
